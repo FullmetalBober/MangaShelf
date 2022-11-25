@@ -1,1 +1,1 @@
-{"version":3,"sources":["MangaShelf.scss","MangaShelf.css"],"names":[],"mappings":"AACE;EACE,gBAAA;ACAJ;ADEE;EACE,gBAAA;ACAJ;;ADGA;EACE,SAAA;ACAF;;ADEA;EACE,aAAA;EACA,gBAAA;ACCF;ADAE;EACE,cAAA;EACA,YAAA;EACA,eAAA;EACA,kBAAA;EACA,mBAAA;EACA,8IAAA;EAEA,qBAAA;ACCJ;;ADGA;EACE,eAAA;ACAF;ADCE;EACE,YAAA;ACCJ;ADAI;EACE,WAAA;ACEN","file":"MangaShelf.css"}
+{"version":3,"sources":["MangaShelf.scss","MangaShelf.css"],"names":[],"mappings":"AACI;EACA,gBAAA;ACAJ;ADEI;EACI,gBAAA;ACAR","file":"MangaShelf.css"}
