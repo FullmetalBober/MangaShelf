@@ -1,30 +1,18 @@
-# import cv2 as cv
 from flask import Flask, render_template, request
-# import numpy
 from pymongo import MongoClient
-from werkzeug.utils import secure_filename
-# from models import Img
+import base64
 
 app = Flask(__name__)
-client = MongoClient('mongodb+srv://RAK_MANIAK:Vlad123370@python-lab-11.2hfteul.mongodb.net/test')
+client = MongoClient('mongodb+srv://RAK_MANIAK:123370@python-lab-11.2hfteul.mongodb.net/test')
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-    #     pic = request.files['picture']
-    #     if not pic:
-    #         return render_template('MangaShelf.html')
-    #     filename = secure_filename(pic.filename)
-    #     mimetype = pic.mimetype
-    #     img = Img(img=pic, mimetype=mimetype, filename=filename)
-    #     return render_template('MangaShelf.html', img=img)
+        img_base64 = base64.b64encode(request.files.get('picture').read())
+        print(str(img_base64)[2:-1])
 
-        # filestr = request.files.get('picture').read()
-        # file_bytes = numpy.fromstring(filestr, numpy.uint8)
-        # img = cv.imdecode(file_bytes, cv.IMREAD_UNCHANGED)
-        # return render_template('MangaShelf.html', test=request.form.get('picture'))
-        return render_template('MangaShelf.html', test=request.files.get('picture'))#Шось непонятне
+        return render_template('MangaShelf.html', test='data:;base64,' + str(img_base64)[2:-1])
     else:
         return render_template('MangaShelf.html', test='error')
 

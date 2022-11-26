@@ -111,9 +111,10 @@
 
     <!-- Cards -->
     <div class="allCards row d-flex justify-content-around">
+      {% for i in range(0, 4) %}
       <div class="col">
         <div class="card">
-          <img src="..." class="card-img-top" alt="...">
+          <img src="{{ test }}" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">Card title</h5>
             <p class="card-text">This is a longer card with supporting text
@@ -122,50 +123,20 @@
           </div>
         </div>
       </div>
-      <div class="col">
-        <div class="card">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text
-              below as a natural lead-in to additional content. This content is
-              a little bit longer.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text
-              below as a natural lead-in to additional content.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text
-              below as a natural lead-in to additional content. This content is
-              a little bit longer.</p>
-          </div>
-        </div>
-      </div>
+      {% endfor %}
     </div>
 
 
  <!-- Це я хочу отримати і вивести зображення -->
- <!-- <form method="post" enctype="multipart/form-data">
+ <form method="post" enctype="multipart/form-data">
   <div>
-    <input class="form-control form-control-lg" name="picture" id="formFileLg" type="file">
+    <input class="form-control form-control-lg" name="picture" id="formFile" type="file">
   </div>
   <button type="submit" name="button" class="btn btn-primary">Submit</button>
 </form>
-<img src="{{ test }}" alt="error">
-{{ test }} -->
+
+</script>
+
 
 
 

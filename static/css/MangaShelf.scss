@@ -6,7 +6,9 @@ nav {
     max-height: 35px;
   }
 }
-
+.row{
+    margin: 0;
+}
 #carousel {
   height: 500px;
   overflow: hidden;
@@ -22,6 +24,7 @@ nav {
 }
 
 .allCards{
+  //  margin-right: 0px;
     margin-top: 3vh;
     .col{
         width: 100px;
