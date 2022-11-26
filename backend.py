@@ -16,6 +16,13 @@ def index():
     else:
         return render_template('MangaShelf.html', test='error')
 
+@app.route('/about')
+def about():
+    return render_template('About.html')
+
+@app.route('/main')
+def main():
+    return render_template('MangaShelf.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
