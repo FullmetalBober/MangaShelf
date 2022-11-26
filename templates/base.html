@@ -50,7 +50,7 @@
             </li>
           </ul>
 
-          <button class="btn btn-outline-success m-md-auto mt-3" data-bs-toggle="modal" data-bs-target="#modalSignIn" data-bs-whatever="">Sign In</button>
+          <button class="btn btn-outline-success m-md-auto mt-3" data-bs-toggle="modal" data-bs-target="#modalSignIn" data-bs-whatever="">{{ entry['User'] }}</button>
 <!--            <button class="btn btn-outline-success m-md-auto mt-3 show-modal"-->
 <!--            data-bs-toggle="modal" data-bs-target="#modalSignUpLabel" data-bs-whatever="@mdo">Sign Up</button>-->
         </div>
@@ -69,20 +69,20 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form method="post" enctype="multipart/form-data" action="/authorize">
           <div class="mb-3">
             <label for="login" class="col-form-label">Login:</label>
-            <input type="text" class="form-control" id="login">
+            <input type="text" class="form-control" id="login" name="login">
           </div>
           <div class="mb-3">
             <label for="password" class="col-form-label">Password:</label>
-            <input type="password" class="form-control" id="password">
+            <input type="password" class="form-control" id="password" name="password">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Sign In</button>
           </div>
         </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Sign In</button>
       </div>
     </div>
   </div>
