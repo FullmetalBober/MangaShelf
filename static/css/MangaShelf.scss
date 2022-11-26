@@ -1,0 +1,35 @@
+nav {
+  .container-fluid {
+    max-width: 990px;
+  }
+  img {
+    max-height: 35px;
+  }
+}
+.row{
+    margin: 0;
+}
+#carousel {
+  height: 500px;
+  overflow: hidden;
+  .carousel-caption {
+    color: #e5bb43;
+    margin: auto;
+    font-size: 50px;
+    margin-bottom: 30%;
+    font-weight: bolder;
+    text-shadow: -3px -3px 0 #4D4644, 3px -3px 0 #4D4644, -3px 3px 0 #4D4644, 3px 3px 0 #4D4644, 4px 4px 0 white, 5px 5px 0 white, 6px 6px 0 white;
+    letter-spacing: 0.1em;
+  }
+}
+
+.allCards{
+  //  margin-right: 0px;
+    margin-top: 3vh;
+    .col{
+        width: 100px;
+        .card{
+            width: 100%;
+        }
+    }
+}
