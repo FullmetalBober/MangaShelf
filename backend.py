@@ -27,6 +27,8 @@ def outputCatalogue():
 def addToMangaShelfCatalogue():
     if request.method == 'POST':
         entry = {
+            'Catalogue': [{'title': manga['title'], 'description': manga['description'], 'image': manga['image']} for
+                          manga in app.db.Catalogue.find({})],
             'User': User.login
         }
         try:
@@ -55,6 +57,8 @@ def addToMangaShelfCatalogue():
 def deleteFromMangaShelfCatalogue():
     if request.method == 'POST':
         entry = {
+            'Catalogue': [{'title': manga['title'], 'description': manga['description'], 'image': manga['image']} for
+                          manga in app.db.Catalogue.find({})],
             'User': User.login
         }
         try:
@@ -67,28 +71,38 @@ def deleteFromMangaShelfCatalogue():
                               for manga in app.db.Catalogue.find({})],
                 'User': User.login
             }
-            return render_template('MangaShelf.html')
+            return render_template('MangaShelf.html', entry=entry)
         except:
-            return render_template('MangaShelf.html')
+            return render_template('MangaShelf.html', entry=entry)
 
 
 @app.route('/registration', methods=['GET', 'POST'])
 def addToMangaShelfUsers():
     if request.method == 'POST':
+        entry = {
+            'Catalogue': [{'title': manga['title'], 'description': manga['description'], 'image': manga['image']} for
+                          manga in app.db.Catalogue.find({})],
+            'User': User.login
+        }
         try:
             name = request.form.get("name")
             password = request.form.get("password")
             if not name or not password or app.db.Users.find_one({"name": name}):
                 return render_template('MangaShelf.html')
             app.db.Users.insert_one({"name": name, "password": password})
-            return render_template('MangaShelf.html')
+            return render_template('MangaShelf.html', entry=entry)
         except:
-            return render_template('MangaShelf.html')
+            return render_template('MangaShelf.html', entry=entry)
 
 
 @app.route('/authorize', methods=['GET', 'POST'])
 def authorize():
     if request.method == 'POST':
+        entry = {
+            'Catalogue': [{'title': manga['title'], 'description': manga['description'], 'image': manga['image']} for
+                          manga in app.db.Catalogue.find({})],
+            'User': User.login
+        }
         try:
             name = request.form.get("login")
             password = request.form.get("password")
@@ -100,7 +114,7 @@ def authorize():
             }
             return render_template('MangaShelf.html', entry=entry)
         except:
-            return render_template('MangaShelf.html')
+            return render_template('MangaShelf.html', entry=entry)
 
 
 @app.route('/about')
@@ -114,7 +128,8 @@ def about():
 @app.route('/main')
 def main():
     entry = {
-        'User': User.login
+    'Catalogue': [{'title': manga['title'], 'description': manga['description'], 'image': manga['image']} for manga in app.db.Catalogue.find({})],
+    'User': User.login
     }
     return render_template('MangaShelf.html', entry=entry)
 
