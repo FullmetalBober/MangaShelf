@@ -11,10 +11,19 @@ class GiveToPage:
     Catalogue = [{'title': manga['title'], 'description': manga['description'], 'image': manga['image']} for manga in
                  app.db.Catalogue.find({})]
     User = 'Sign In'
+    UserLogin = False
 
     @staticmethod
     def getDefaultUserName():
         return 'Sign In'
+
+    @staticmethod
+    def setUserName(newUserName):
+        GiveToPage.User = newUserName
+        if newUserName != GiveToPage.getDefaultUserName():
+            GiveToPage.UserLogin = True
+        else:
+            GiveToPage.UserLogin = False
 
     @staticmethod
     def reloadCatalogue():
@@ -23,7 +32,7 @@ class GiveToPage:
 
     @staticmethod
     def get_dictionary():
-        return {'Catalogue': GiveToPage.Catalogue, 'User': GiveToPage.User}
+        return {'Catalogue': GiveToPage.Catalogue, 'User': GiveToPage.User, 'UserLogin': GiveToPage.UserLogin}
 
     @staticmethod
     def get_dictionaryWithoutCatalogue():
@@ -103,7 +112,7 @@ def addToMangaShelfUsers():
             if not name or not password or app.db.Users.find_one({"name": name}):
                 return render_template('MangaShelf.html')
             app.db.Users.insert_one({"name": name, "password": password})
-            GiveToPage.User = name
+            GiveToPage.setUserName(name)
             return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
         except:
             return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
@@ -117,7 +126,7 @@ def authorize():
             password = request.form.get("password")
             if not name or not password or not app.db.Users.find_one({"name": name, "password": password}):
                 return render_template('MangaShelf.html')
-            GiveToPage.User = name
+            GiveToPage.setUserName(name)
             return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
         except:
             return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
