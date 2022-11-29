@@ -194,6 +194,9 @@ def about():
 def main():
     return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
 
+@app.route('/mangaPage')
+def mangaPage():
+    return render_template('mangaPage.html', entry=GiveToPage.get_dictionary())
 
 if __name__ == '__main__':
     app.run(debug=True)
