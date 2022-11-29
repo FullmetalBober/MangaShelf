@@ -9,6 +9,12 @@
   #offcanvasBtn{
   background-color: #e3c865;
 }
+a:active, /* активная/посещенная ссылка /
+  a:hover,  / при наведении */
+  a {
+  text-decoration: none;
+  color: #000000;
+}
 </style>
 {%endblock%}
 {%block body%}
@@ -64,7 +70,7 @@
 
 
 <!-- Cards -->
-{%if entry['UserLogin'] %}
+{%if entry['User'] == 'admin' %}
 <button class="btn mb-3 w-100" id="offcanvasBtn" type="button"
   data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
   aria-controls="offcanvasRight">Add new / Edit / Delete</button>
@@ -74,7 +80,7 @@
   {% for element in entry['Catalogue'] %}
   <div class="col-3">
     <div class="card">
-      <a href="/mangaPage">
+      <a href="/mangaPage/{{ element['title'] }}">
       <img src="{{ element['image'] }}" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">{{ element['title'] }}</h5>

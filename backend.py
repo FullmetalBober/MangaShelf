@@ -59,10 +59,19 @@ class GiveToPage:
     def get_dictionaryWithoutCatalogue():
         return {'User': GiveToPage.User}
 
+    @staticmethod
+    def get_dictionaryForMangaPage(title):
+        manga = app.db.Catalogue.find_one({'title': title})
+        return {'Manga': manga, 'User': GiveToPage.User, 'UserLogin': GiveToPage.UserLogin}
+
 
 @app.route('/')
 def outputCatalogue():
     return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
+
+@app.route('/mangaPage/<mangaName>')
+def outputMangaPage(mangaName):
+    return render_template('mangaPage.html', entry=GiveToPage.get_dictionaryForMangaPage(mangaName))
 
 @app.route('/page:<int:page>')
 def outputCataloguePage(page):
@@ -165,7 +174,6 @@ def addToMangaShelfUsers():
             return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
         except:
             return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
-
 
 @app.route('/authorize', methods=['GET', 'POST'])
 def authorize():

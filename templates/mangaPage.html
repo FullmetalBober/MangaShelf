@@ -16,55 +16,12 @@
 {%block body%}
 <div class="container py-4 aboutManga mt-4">
     <img
-        src="https://upload.wikimedia.org/wikipedia/commons/5/58/Wikipe-tan_manga_page1.jpg"
+        src="{{ entry['Manga']['image'] }}"
         alt=""
         style="float: left">
-    <h1>Title</h1>
+    <h1>{{ entry['Manga']['title'] }}</h1>
     <h3>Plot</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus,
-        blanditiis hic impedit nihil quae quaerat quam quidem sed sunt voluptas!
-        Distinctio ea fugiat maiores nesciunt quam quis, quo rerum unde?
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus,
-        blanditiis hic impedit nihil quae quaerat quam quidem sed sunt voluptas!
-        Distinctio ea fugiat maiores nesciunt quam quis, quo rerum unde?
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus,
-        blanditiis hic impedit nihil quae quaerat quam quidem sed sunt voluptas!
-        Distinctio ea fugiat maiores nesciunt quam quis, quo rerum unde?
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus,
-        blanditiis hic impedit nihil quae quaerat quam quidem sed sunt voluptas!
-        Distinctio ea fugiat maiores nesciunt quam quis, quo rerum unde?
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus,
-        blanditiis hic impedit nihil quae quaerat quam quidem sed sunt voluptas!
-        Distinctio ea fugiat maiores nesciunt quam quis, quo rerum unde?
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus,
-        blanditiis hic impedit nihil quae quaerat quam quidem sed sunt voluptas!
-        Distinctio ea fugiat maiores nesciunt quam quis, quo rerum unde?
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus,
-        blanditiis hic impedit nihil quae quaerat quam quidem sed sunt voluptas!
-        Distinctio ea fugiat maiores nesciunt quam quis, quo rerum unde?
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus,
-        blanditiis hic impedit nihil quae quaerat quam quidem sed sunt voluptas!
-        Distinctio ea fugiat maiores nesciunt quam quis, quo rerum unde?
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus,
-        blanditiis hic impedit nihil quae quaerat quam quidem sed sunt voluptas!
-        Distinctio ea fugiat maiores nesciunt quam quis, quo rerum unde?
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus,
-        blanditiis hic impedit nihil quae quaerat quam quidem sed sunt voluptas!
-        Distinctio ea fugiat maiores nesciunt quam quis, quo rerum unde?
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus,
-        blanditiis hic impedit nihil quae quaerat quam quidem sed sunt voluptas!
-        Distinctio ea fugiat maiores nesciunt quam quis, quo rerum unde?
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus,
-        blanditiis hic impedit nihil quae quaerat quam quidem sed sunt voluptas!
-        Distinctio ea fugiat maiores nesciunt quam quis, quo rerum unde?
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus,
-        blanditiis hic impedit nihil quae quaerat quam quidem sed sunt voluptas!
-        Distinctio ea fugiat maiores nesciunt quam quis, quo rerum unde?
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus,
-        blanditiis hic impedit nihil quae quaerat quam quidem sed sunt voluptas!
-        Distinctio ea fugiat maiores nesciunt quam quis, quo rerum unde?
-
-    </p>
+    <p>{{ entry['Manga']['description'] }}</p>
 </div>
 
 
