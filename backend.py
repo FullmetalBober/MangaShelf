@@ -23,6 +23,20 @@ class GiveToPage:
     UserLogin = False
 
     @staticmethod
+    def addSaveCatalogue():
+        if len(GiveToPage.SavesCatalogues) == 3:
+            GiveToPage.SavesCatalogues.pop(0)
+        if GiveToPage.CataloguePage not in [i[0] for i in GiveToPage.SavesCatalogues]:
+            GiveToPage.SavesCatalogues.append((GiveToPage.CataloguePage, GiveToPage.Catalogue))
+
+    @staticmethod
+    def getSaveCatalogue(page):
+        GiveToPage.addSaveCatalogue()
+        for i in GiveToPage.SavesCatalogues:
+            if i[0] == page:
+                return i[1]
+
+    @staticmethod
     def setUserName(newUserName):
         GiveToPage.User = newUserName
         if newUserName != GiveToPage.getDefaultUserName():
@@ -51,19 +65,31 @@ def outputCatalogue():
 
 @app.route('/page:<int:page>')
 def outputCataloguePage(page):
-    GiveToPage.reloadCatalogue(page)
+    save = GiveToPage.getSaveCatalogue(page)
+    if save:
+        GiveToPage.Catalogue = save
+    else:
+        GiveToPage.reloadCatalogue(page)
     return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
 
 @app.route('/page:Previous')
 def outputCataloguePagePrevious():
     if GiveToPage.CataloguePage > 1:
-        GiveToPage.reloadCatalogue(GiveToPage.CataloguePage - 1)
+        save = GiveToPage.getSaveCatalogue(GiveToPage.CataloguePage - 1)
+        if save:
+            GiveToPage.Catalogue = save
+        else:
+            GiveToPage.reloadCatalogue(GiveToPage.CataloguePage - 1)
     return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
 
 @app.route('/page:Next')
 def outputCataloguePageNext():
     if GiveToPage.CataloguePage + 1 < GiveToPage.CataloguePages:
-        GiveToPage.reloadCatalogue(GiveToPage.CataloguePage + 1)
+        save = GiveToPage.getSaveCatalogue(GiveToPage.CataloguePage + 1)
+        if save:
+            GiveToPage.Catalogue = save
+        else:
+            GiveToPage.reloadCatalogue(GiveToPage.CataloguePage + 1)
     return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
 
 @app.route('/addElement', methods=['GET', 'POST'])
