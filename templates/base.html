@@ -50,8 +50,12 @@
             </li>
           </ul>
           <div class="mt-3">
-            <button class="btn btn-outline-success m-md-auto" data-bs-toggle="modal" data-bs-target="#modalSignIn" data-bs-whatever="">{{ entry['User'] }}</button>
-            <button class="btn btn-outline-danger m-md-auto" >Log out</button>
+            <form method="post" action="/logout"> 
+              <button type="button" class="btn btn-outline-success m-md-auto" data-bs-toggle="modal" data-bs-target="#modalSignIn" data-bs-whatever="">{{ entry['User'] }}</button>
+              {% if entry['UserLogin'] %}
+            <button type="submit" class="btn btn-outline-danger m-md-auto">Log out</button>
+            {% endif %}
+            </form>
           </div>
         </div>
       </div>

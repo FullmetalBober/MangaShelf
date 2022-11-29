@@ -131,6 +131,10 @@ def authorize():
         except:
             return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
 
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    GiveToPage.setUserName(GiveToPage.getDefaultUserName())
+    return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
 
 @app.route('/about')
 def about():
