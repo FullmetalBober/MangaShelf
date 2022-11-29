@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from pymongo import MongoClient
-import base64
+from base64 import b64encode
+from math import ceil
 
 app = Flask(__name__)
 client = MongoClient('mongodb+srv://RAK_MANIAK:123370@mangashelf.3ortmjy.mongodb.net/test')
@@ -8,14 +9,18 @@ app.db = client.MangaShelf
 
 
 class GiveToPage:
-    Catalogue = [{'title': manga['title'], 'description': manga['description'], 'image': manga['image']} for manga in
-                 app.db.Catalogue.find({})]
-    User = 'Sign In'
-    UserLogin = False
-
     @staticmethod
     def getDefaultUserName():
         return 'Sign In'
+
+    CataloguePage = 1
+    CataloguePageCount = 8
+    CataloguePages = ceil(app.db.Catalogue.count_documents({}) / CataloguePageCount) + 1
+    Catalogue = [{'title': manga['title'], 'description': manga['description'], 'image': manga['image']} for manga in
+                 app.db.Catalogue.find({}).limit(CataloguePage * CataloguePageCount)]
+    SavesCatalogues = [(CataloguePage, Catalogue)]
+    User = getDefaultUserName()
+    UserLogin = False
 
     @staticmethod
     def setUserName(newUserName):
@@ -26,13 +31,14 @@ class GiveToPage:
             GiveToPage.UserLogin = False
 
     @staticmethod
-    def reloadCatalogue():
+    def reloadCatalogue(page=CataloguePage):
+        GiveToPage.CataloguePage = page
         GiveToPage.Catalogue = [{'title': manga['title'], 'description': manga['description'], 'image': manga['image']}
-                                for manga in app.db.Catalogue.find({})]
+                                for manga in app.db.Catalogue.find({}).skip((page - 1) * GiveToPage.CataloguePageCount).limit(GiveToPage.CataloguePageCount)]
 
     @staticmethod
     def get_dictionary():
-        return {'Catalogue': GiveToPage.Catalogue, 'User': GiveToPage.User, 'UserLogin': GiveToPage.UserLogin}
+        return {'Catalogue': GiveToPage.Catalogue, 'User': GiveToPage.User, 'UserLogin': GiveToPage.UserLogin, 'CataloguePages': GiveToPage.CataloguePages}
 
     @staticmethod
     def get_dictionaryWithoutCatalogue():
@@ -43,6 +49,22 @@ class GiveToPage:
 def outputCatalogue():
     return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
 
+@app.route('/page:<int:page>')
+def outputCataloguePage(page):
+    GiveToPage.reloadCatalogue(page)
+    return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
+
+@app.route('/page:Previous')
+def outputCataloguePagePrevious():
+    if GiveToPage.CataloguePage > 1:
+        GiveToPage.reloadCatalogue(GiveToPage.CataloguePage - 1)
+    return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
+
+@app.route('/page:Next')
+def outputCataloguePageNext():
+    if GiveToPage.CataloguePage + 1 < GiveToPage.CataloguePages:
+        GiveToPage.reloadCatalogue(GiveToPage.CataloguePage + 1)
+    return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
 
 @app.route('/addElement', methods=['GET', 'POST'])
 def addToMewMangaCatalogue():
@@ -50,7 +72,7 @@ def addToMewMangaCatalogue():
         try:
             title = request.form.get("title")
             description = request.form.get("description")
-            img_base64 = base64.b64encode(request.files.get('image').read())
+            img_base64 = b64encode(request.files.get('image').read())
 
             if not title or not description or not description or not img_base64 or app.db.Catalogue.find_one(
                     {"title": title}):
@@ -87,7 +109,7 @@ def updateFromMewMangaCatalogueByTitle():
 
             newTitle = request.form.get("newTitle")
             newDescription = request.form.get("newDescription")
-            newImage = base64.b64encode(request.files.get('newImage').read())
+            newImage = b64encode(request.files.get('newImage').read())
             if newImage:
                 app.db.Catalogue.update_one({"title": findByTitle},
                                             {"$set": {"image": 'data:;base64,' + str(newImage)[2:-1]}})
