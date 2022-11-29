@@ -1,19 +1,25 @@
 from flask import Flask, render_template, request
 from pymongo import MongoClient
 import base64
-# from itertools import islice
 
 app = Flask(__name__)
 client = MongoClient('mongodb+srv://RAK_MANIAK:123370@mangashelf.3ortmjy.mongodb.net/test')
 app.db = client.MangaShelf
 
+
 class GiveToPage:
-    Catalogue = [{'title': manga['title'], 'description': manga['description'], 'image': manga['image']} for manga in app.db.Catalogue.find({})]
+    Catalogue = [{'title': manga['title'], 'description': manga['description'], 'image': manga['image']} for manga in
+                 app.db.Catalogue.find({})]
     User = 'Sign In'
 
     @staticmethod
+    def getDefaultUserName():
+        return 'Sign In'
+
+    @staticmethod
     def reloadCatalogue():
-        GiveToPage.Catalogue = [{'title': manga['title'], 'description': manga['description'], 'image': manga['image']} for manga in app.db.Catalogue.find({})]
+        GiveToPage.Catalogue = [{'title': manga['title'], 'description': manga['description'], 'image': manga['image']}
+                                for manga in app.db.Catalogue.find({})]
 
     @staticmethod
     def get_dictionary():
@@ -22,6 +28,7 @@ class GiveToPage:
     @staticmethod
     def get_dictionaryWithoutCatalogue():
         return {'User': GiveToPage.User}
+
 
 @app.route('/')
 def outputCatalogue():
@@ -36,7 +43,8 @@ def addToMewMangaCatalogue():
             description = request.form.get("description")
             img_base64 = base64.b64encode(request.files.get('image').read())
 
-            if not title or not description or not description or not img_base64 or app.db.Catalogue.find_one({"title": title}):
+            if not title or not description or not description or not img_base64 or app.db.Catalogue.find_one(
+                    {"title": title}):
                 return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
             app.db.Catalogue.insert_one(
                 {"title": title, "description": description, "image": 'data:;base64,' + str(img_base64)[2:-1]})
@@ -59,6 +67,7 @@ def deleteFromMewMangaCatalogueByTitle():
         except:
             return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
 
+
 @app.route('/updateElement', methods=['GET', 'POST'])
 def updateFromMewMangaCatalogueByTitle():
     if request.method == 'POST':
@@ -71,8 +80,8 @@ def updateFromMewMangaCatalogueByTitle():
             newDescription = request.form.get("newDescription")
             newImage = base64.b64encode(request.files.get('newImage').read())
             if newImage:
-                # newImage = base64.b64encode(request.files.get('newImage').read())
-                app.db.Catalogue.update_one({"title": findByTitle}, {"$set": {"image": 'data:;base64,' + str(newImage)[2:-1]}})
+                app.db.Catalogue.update_one({"title": findByTitle},
+                                            {"$set": {"image": 'data:;base64,' + str(newImage)[2:-1]}})
             if newDescription:
                 app.db.Catalogue.update_one({"title": findByTitle}, {"$set": {"description": newDescription}})
 
@@ -83,6 +92,7 @@ def updateFromMewMangaCatalogueByTitle():
             return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
         except:
             return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
+
 
 @app.route('/registration', methods=['GET', 'POST'])
 def addToMangaShelfUsers():
