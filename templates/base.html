@@ -78,9 +78,10 @@
             <label for="password" class="col-form-label">Password:</label>
             <input type="password" class="form-control" id="password" name="password">
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <hr>
+          <div class="mb-3">
             <button type="submit" class="btn btn-primary">Sign In</button>
+            <button type="button" class="btn btn-primary" data-bs-target="#modalSignUp" data-bs-toggle="modal">I want to register</button>
           </div>
         </form>
       </div>
@@ -88,34 +89,33 @@
   </div>
 </div>
 
-
-<!--        <div class="modal fade" id="modalSignUp" tabindex="-1" aria-labelledby="modalSignUpLabel" aria-hidden="true">-->
-<!--      <div class="modal-dialog modal-dialog-centered">-->
-<!--        <div class="modal-content">-->
-<!--          <div class="modal-header">-->
-<!--            <h1 class="modal-title fs-5" id="modalSignUpLabel">Register</h1>-->
-<!--            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--          </div>-->
-<!--          <div class="modal-body">-->
-<!--            <form>-->
-<!--              <div class="mb-3">-->
-<!--                <label for="newLogin" class="col-form-label">Login:</label>-->
-<!--                <input type="text" class="form-control" id="newLogin">-->
-<!--              </div>-->
-<!--              <div class="mb-3">-->
-<!--                <label for="newPassword" class="col-form-label">Password:</label>-->
-<!--                <input type="password" class="form-control" id="newPassword">-->
-<!--              </div>-->
-<!--            </form>-->
-<!--          </div>-->
-<!--          <div class="modal-footer">-->
-<!--            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
-<!--            <button type="button" class="btn btn-primary">Register</button>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-
+<div class="modal fade" id="modalSignUp" aria-hidden="true" aria-labelledby="modalSignUpLabel" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="modalSignUpLabel">Register</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="post" enctype="multipart/form-data" action="/registration">
+          <div class="mb-3">
+            <label for="InputName" class="col-form-label">Login:</label>
+            <input type="text" class="form-control" id="InputName" name="name">
+          </div>
+          <div class="mb-3">
+            <label for="InputPassword" class="col-form-label">Password:</label>
+            <input type="password" class="form-control" id="InputPassword" name="password">
+          </div>
+          <hr>
+          <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+            <button type="button" class="btn btn-primary" data-bs-target="#modalSignIn" data-bs-toggle="modal">Already have an account</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
