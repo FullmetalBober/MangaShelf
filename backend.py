@@ -23,19 +23,39 @@ class GiveToPage:
     UserLogin = False
 
     @staticmethod
+    def updateCataloguePages():
+        GiveToPage.CataloguePages = ceil(app.db.Catalogue.count_documents({}) / GiveToPage.CataloguePageCount) + 1
+
+    @staticmethod
     def addSaveCatalogue():
-        if len(GiveToPage.SavesCatalogues) == 3:
+        if len(GiveToPage.SavesCatalogues) == 5:
             GiveToPage.SavesCatalogues.pop(0)
         if GiveToPage.CataloguePage not in [i[0] for i in GiveToPage.SavesCatalogues]:
             GiveToPage.SavesCatalogues.append((GiveToPage.CataloguePage, GiveToPage.Catalogue))
 
     @staticmethod
-    def getSaveCatalogue(page):
-        GiveToPage.addSaveCatalogue()
+    def removeSaveCatalogue():
+        GiveToPage.SavesCatalogues.pop([i[0] for i in GiveToPage.SavesCatalogues].index(GiveToPage.CataloguePage))
+
+    @staticmethod
+    def getSaveCatalogue():
         for i in GiveToPage.SavesCatalogues:
-            if i[0] == page:
-                GiveToPage.CataloguePage = page
+            if i[0] == GiveToPage.CataloguePage:
                 return i[1]
+
+    @staticmethod
+    def reloadCatalogue(page=CataloguePage, update=False):
+        if update:
+            GiveToPage.removeSaveCatalogue()
+        GiveToPage.updateCataloguePages()
+        GiveToPage.CataloguePage = page
+        save = GiveToPage.getSaveCatalogue()
+        if save:
+            GiveToPage.Catalogue = save
+        else:
+            GiveToPage.Catalogue = [{'title': manga['title'], 'description': manga['description'], 'image': manga['image']}
+                                for manga in app.db.Catalogue.find({}).skip((page - 1) * GiveToPage.CataloguePageCount).limit(GiveToPage.CataloguePageCount)]
+            GiveToPage.addSaveCatalogue()
 
     @staticmethod
     def setUserName(newUserName):
@@ -44,12 +64,6 @@ class GiveToPage:
             GiveToPage.UserLogin = True
         else:
             GiveToPage.UserLogin = False
-
-    @staticmethod
-    def reloadCatalogue(page=CataloguePage):
-        GiveToPage.CataloguePage = page
-        GiveToPage.Catalogue = [{'title': manga['title'], 'description': manga['description'], 'image': manga['image']}
-                                for manga in app.db.Catalogue.find({}).skip((page - 1) * GiveToPage.CataloguePageCount).limit(GiveToPage.CataloguePageCount)]
 
     @staticmethod
     def get_dictionary():
@@ -75,31 +89,19 @@ def outputMangaPage(mangaName):
 
 @app.route('/page:<int:page>')
 def outputCataloguePage(page):
-    save = GiveToPage.getSaveCatalogue(page)
-    if save:
-        GiveToPage.Catalogue = save
-    else:
-        GiveToPage.reloadCatalogue(page)
+    GiveToPage.reloadCatalogue(page)
     return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
 
 @app.route('/page:Previous')
 def outputCataloguePagePrevious():
     if GiveToPage.CataloguePage > 1:
-        save = GiveToPage.getSaveCatalogue(GiveToPage.CataloguePage - 1)
-        if save:
-            GiveToPage.Catalogue = save
-        else:
-            GiveToPage.reloadCatalogue(GiveToPage.CataloguePage - 1)
+        GiveToPage.reloadCatalogue(GiveToPage.CataloguePage - 1)
     return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
 
 @app.route('/page:Next')
 def outputCataloguePageNext():
     if GiveToPage.CataloguePage + 1 < GiveToPage.CataloguePages:
-        save = GiveToPage.getSaveCatalogue(GiveToPage.CataloguePage + 1)
-        if save:
-            GiveToPage.Catalogue = save
-        else:
-            GiveToPage.reloadCatalogue(GiveToPage.CataloguePage + 1)
+        GiveToPage.reloadCatalogue(GiveToPage.CataloguePage + 1)
     return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
 
 @app.route('/addElement', methods=['GET', 'POST'])
@@ -115,7 +117,7 @@ def addToMewMangaCatalogue():
                 return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
             app.db.Catalogue.insert_one(
                 {"title": title, "description": description, "image": 'data:;base64,' + str(img_base64)[2:-1]})
-            GiveToPage.reloadCatalogue()
+            GiveToPage.reloadCatalogue(GiveToPage.CataloguePage, True)
             return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
         except:
             return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
@@ -129,7 +131,7 @@ def deleteFromMewMangaCatalogueByTitle():
             if not title or not app.db.Catalogue.find_one({"title": title}):
                 return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
             app.db.Catalogue.delete_one({"title": title})
-            GiveToPage.reloadCatalogue()
+            GiveToPage.reloadCatalogue(GiveToPage.CataloguePage, True)
             return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
         except:
             return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
