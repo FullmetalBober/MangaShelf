@@ -89,7 +89,7 @@
   <ul class="pagination ">
     <li class="page-item"><a href="/page:Previous" class="page-link">Previous</a></li>
     {% for i in range(1, entry['CataloguePages']) %}
-    <li class="page-item"><a href="/page:{{ i }}" class="page-link">{{ i }}</a></li>
+    <li class="page-item {%if entry['CataloguePage'] == i%}active{%endif%}"><a href="/page:{{ i }}" class="page-link">{{ i }}</a></li>
     {% endfor %}
     <li class="page-item"><a href="/page:Next" class="page-link">Next</a></li>
   </ul>

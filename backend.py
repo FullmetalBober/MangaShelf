@@ -34,6 +34,7 @@ class GiveToPage:
         GiveToPage.addSaveCatalogue()
         for i in GiveToPage.SavesCatalogues:
             if i[0] == page:
+                GiveToPage.CataloguePage = page
                 return i[1]
 
     @staticmethod
@@ -52,7 +53,7 @@ class GiveToPage:
 
     @staticmethod
     def get_dictionary():
-        return {'Catalogue': GiveToPage.Catalogue, 'User': GiveToPage.User, 'UserLogin': GiveToPage.UserLogin, 'CataloguePages': GiveToPage.CataloguePages}
+        return {'Catalogue': GiveToPage.Catalogue, 'User': GiveToPage.User, 'UserLogin': GiveToPage.UserLogin, 'CataloguePages': GiveToPage.CataloguePages, 'CataloguePage': GiveToPage.CataloguePage}
 
     @staticmethod
     def get_dictionaryWithoutCatalogue():
