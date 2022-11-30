@@ -1,5 +1,3 @@
 flask
 pymongo[srv]
-base64
-math
 gunicorn
