@@ -76,7 +76,7 @@ class GiveToPage:
 
     @staticmethod
     def get_dictionaryWithoutCatalogue():
-        return {'User': GiveToPage.User}
+        return {'User': GiveToPage.User, 'UserLogin': GiveToPage.UserLogin}
 
     @staticmethod
     def get_dictionaryForMangaPage(title):
@@ -159,7 +159,7 @@ def updateFromMewMangaCatalogueByTitle():
             if newTitle:
                 app.db.Catalogue.update_one({"title": findByTitle}, {"$set": {"title": newTitle}})
 
-            GiveToPage.reloadCatalogue()
+            GiveToPage.reloadCatalogue(GiveToPage.CataloguePage, True)
             return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
         except:
             return render_template('MangaShelf.html', entry=GiveToPage.get_dictionary())
