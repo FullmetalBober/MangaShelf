@@ -6,7 +6,7 @@ from math import ceil
 
 # def create_app():
 app = Flask(__name__)
-client = MongoClient('mongodb+srv://RAK_MANIAK:123370@mangashelf.3ortmjy.mongodb.net/test')
+client = MongoClient('mongodb+srv://<login>:<password>@mangashelf.3ortmjy.mongodb.net/test')
 app.db = client.MangaShelf
 
 class GiveToPage:
